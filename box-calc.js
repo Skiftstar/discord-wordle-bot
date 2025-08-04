@@ -1,7 +1,5 @@
 const fs = require('fs');
 const { createCanvas, loadImage } = require('canvas');
-const sharp = require('sharp');
-const path = require('path');
 const { execFile } = require('child_process');
 
 const IMAGE_PATH = './screenshot.png';
