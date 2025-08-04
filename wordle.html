@@ -1,0 +1,241 @@
+<html>
+
+<body>
+  <div class="playfield">
+    <div class="box-row" id="row-1">
+      <div class="letter-box inactive" id="letter-1-1"></div>
+      <div class="letter-box inactive" id="letter-1-2"></div>
+      <div class="letter-box inactive" id="letter-1-3"></div>
+      <div class="letter-box inactive" id="letter-1-4"></div>
+      <div class="letter-box inactive" id="letter-1-5"></div>
+    </div>
+
+    <div class="box-row" id="row-2">
+      <div class="letter-box inactive" id="letter-2-1"></div>
+      <div class="letter-box inactive" id="letter-2-2"></div>
+      <div class="letter-box inactive" id="letter-2-3"></div>
+      <div class="letter-box inactive" id="letter-2-4"></div>
+      <div class="letter-box inactive" id="letter-2-5"></div>
+    </div>
+
+    <div class="box-row" id="row-3">
+      <div class="letter-box inactive" id="letter-3-1"></div>
+      <div class="letter-box inactive" id="letter-3-2"></div>
+      <div class="letter-box inactive" id="letter-3-3"></div>
+      <div class="letter-box inactive" id="letter-3-4"></div>
+      <div class="letter-box inactive" id="letter-3-5"></div>
+    </div>
+
+    <div class="box-row" id="row-4">
+      <div class="letter-box inactive" id="letter-4-1"></div>
+      <div class="letter-box inactive" id="letter-4-2"></div>
+      <div class="letter-box inactive" id="letter-4-3"></div>
+      <div class="letter-box inactive" id="letter-4-4"></div>
+      <div class="letter-box inactive" id="letter-4-5"></div>
+    </div>
+
+    <div class="box-row" id="row-5">
+      <div class="letter-box inactive" id="letter-5-1"></div>
+      <div class="letter-box inactive" id="letter-5-2"></div>
+      <div class="letter-box inactive" id="letter-5-3"></div>
+      <div class="letter-box inactive" id="letter-5-4"></div>
+      <div class="letter-box inactive" id="letter-5-5"></div>
+    </div>
+
+    <div class="box-row" id="row-6">
+      <div class="letter-box inactive" id="letter-6-1"></div>
+      <div class="letter-box inactive" id="letter-6-2"></div>
+      <div class="letter-box inactive" id="letter-6-3"></div>
+      <div class="letter-box inactive" id="letter-6-4"></div>
+      <div class="letter-box inactive" id="letter-6-5"></div>
+    </div>
+
+  </div>
+
+  <div class="cheating area">
+    <span id="final-word" class="final-word"></span>
+  </div>
+</body>
+
+<script>
+
+  const loadPossibleWords = () => {
+    const url = "https://gist.githubusercontent.com/dracos/dd0668f281e685bad51479e5acaadb93/raw/6bfa15d263d6d5b63840a8e5b64e04b382fdb079/valid-wordle-words.txt";
+
+    fetch(url).then(response => {
+      if (!response.ok) throw new Error("No Txt qwq")
+      return response.text();
+    }).then(data => {
+      possibleWords = data.split("\n").map(word => word.trim())
+      selectFinalWord()
+    })
+  }
+
+  const selectFinalWord = () => {
+    finalWord = possibleWords[getRandomInt(possibleWords.length)]
+    document.getElementById("final-word").innerHTML = finalWord
+    initialized = true
+  }
+
+  const fillLetterMap = () => {
+    for (let i = 0; i < 6; i++) {
+      typedLetters[i] = []
+      for (let j = 0; j < 5; j++) {
+        typedLetters[i][j] = ""
+      }
+    }
+  }
+
+  const isCurrentRowFilled = () => {
+    for (const letter in typedLetters[currentRow]) {
+      if (letter.length === 0) return false
+    }
+    return true
+  }
+
+  const isValidWord = () => {
+    const word = typedLetters[currentRow].join("").toLowerCase()
+    return possibleWords.includes(word)
+  }
+
+  const checkLetters = () => {
+    typedLetters[currentRow].forEach((letter, index) => {
+      letter = letter.toLowerCase()
+      compareWord = finalWord.toLowerCase()
+      const letterBox = document.getElementById(`letter-${currentRow + 1}-${index + 1}`)
+      if (letter === finalWord.charAt(index)) {
+        letterBox.className = "letter-box correct"
+        return
+      }
+
+      if (finalWord.includes(letter)) {
+        letterBox.className = "letter-box valid"
+        return
+      }
+
+      letterBox.className = "letter-box wrong"
+    })
+  }
+
+  const addLetter = (key) => {
+    const nextFreeSpot = getNextFreeSpot()
+    if (nextFreeSpot === -1) return
+
+    typedLetters[currentRow][nextFreeSpot] = key
+    const letterBox = document.getElementById(`letter-${currentRow + 1}-${nextFreeSpot + 1}`)
+    letterBox.innerHTML = key.toUpperCase()
+  }
+
+  const deleteLetter = () => {
+    const nextFreeSpot = getNextFreeSpot()
+    const lastLetterIndex = nextFreeSpot === -1 ? typedLetters[currentRow].length : nextFreeSpot
+
+    if (lastLetterIndex === 0) return
+
+    const letterBox = document.getElementById(`letter-${currentRow + 1}-${lastLetterIndex}`)
+    letterBox.innerHTML = ""
+    typedLetters[currentRow][lastLetterIndex - 1] = ""
+  }
+
+  // returns -1 if row is full
+  const getNextFreeSpot = () => {
+    for (let i = 0; i < typedLetters[currentRow].length; i++) {
+      const letter = typedLetters[currentRow][i]
+      if (letter.length === 0) return i
+    }
+
+    return -1
+  }
+
+  const getRandomInt = (max) => {
+    return Math.floor(Math.random() * max)
+  }
+
+  let finalWord = ""
+  let possibleWords = []
+  let initialized = false
+
+  const typedLetters = []
+  let currentRow = 0
+
+  loadPossibleWords()
+  fillLetterMap()
+
+  window.addEventListener("keydown", (e) => {
+    if (!initialized) return
+
+    if (e.key === "Enter") {
+      if (!isCurrentRowFilled()) return
+      if (!isValidWord()) return
+
+      checkLetters()
+      currentRow = currentRow + 1
+      return
+    }
+
+    if (e.key === "Backspace") {
+      deleteLetter()
+      return
+    }
+
+    //only allow a-z and A-Z
+    if (/^[a-zA-Z]$/.test(e.key)) {
+      addLetter(e.key)
+      return
+    }
+  })
+
+</script>
+
+<style>
+  .playfield {
+    background-color: black;
+    width: 350px;
+    height: 400px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-items: center;
+    align-items: center;
+  }
+
+  .box-row {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+  }
+
+  .letter-box {
+    width: 50px;
+    height: 50px;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: large;
+    font-weight: bold;
+    border: 1px solid gray;
+  }
+
+  .letter-box.wrong {
+    background-color: #3a3a3c;
+    border: 1px solid #3a3a3c;
+  }
+
+  .letter-box.inactive {
+    border: 1px solid gray;
+  }
+
+  .letter-box.valid {
+    background-color: #b59f3b;
+    border: 1px solid #b59f3b;
+  }
+
+  .letter-box.correct {
+    background-color: #538d4e;
+    border: 1px solid #538d4e;
+  }
+</style>
+
+</html>
