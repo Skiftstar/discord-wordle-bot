@@ -1,0 +1,24 @@
+{
+  "name": "discord-wordle-bot",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/Skiftstar/discord-wordle-bot#readme",
+  "bugs": {
+    "url": "https://github.com/Skiftstar/discord-wordle-bot/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Skiftstar/discord-wordle-bot.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "canvas": "^3.1.2",
+    "sharp": "^0.34.3"
+  }
+}
