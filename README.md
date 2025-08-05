@@ -7,8 +7,7 @@ Okie :3
 https://github.com/user-attachments/assets/bd61cff2-0649-40cf-9db8-b1eb2f1f8fa0
 
 # Installation
-Only works on Linux
-
+## Linux
 Currently requires `grim` and `wtype`
 ```
 sudo pacman -S grim wtype
@@ -16,7 +15,7 @@ sudo pacman -S grim wtype
 grim is required to take screenshots
 wtype is used for submitting the input
 
-also uses `canvas` to analyze the screenshots
+also uses `canvas` to analyze the screenshots. Sadly we have `screenshot-desktop` as bloat as well, as it's needed on windows.
 ```
 npm i
 ```
@@ -26,9 +25,20 @@ Make the screenshot script executeable
 chmod +x screenshot.sh
 ```
 
+## Windows
+
+Download [NirCmd](https://www.nirsoft.net/utils/nircmd.html) (Scroll to bottom of site and click "Downlaod NirCmd")
+
+Unzip archive and put NirCmd.exe inside the project folder. NirCmd is used to input keystrokes.
+
+Install npm packages `canvas` for screen validation and `screenshot-desktop` for screenshot taking
+```
+npm i
+```
+
 # Usage
 Open Discord Wordle, make sure it's in **Dark Mode** and that it's **big enough**.
-If needed, adjust screenshot area in `box-calc.js`, by default it just screenshots the entire first monitor.
+If needed, adjust screenshot area in `box-calc.js` (**Only works on Linux! Windows just screenshots your entire fist desktop!**)
 
 Run
 ```
