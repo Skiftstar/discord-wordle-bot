@@ -1,6 +1,6 @@
 const { getPattern } = require("./wordle-calc.js")
 
-const getNextGuess = (possibleWords) => {
+const getNextEntropyGuess = (possibleWords) => {
   let bestGuess = { entropy: -1, word: "" }
   for (const word of possibleWords) {
     const entropy = getWordEntropy(possibleWords, word)
@@ -28,4 +28,23 @@ const getWordEntropy = (possibleWords, wordToCheck) => {
   return entropy
 }
 
-module.exports = { getNextGuess }
+
+const getUnusedLetters = (guessedWords, possibleWords) => {
+  const used = new Set(guessedWords.join('').split(''))
+  const lettersFromPossibleWords = new Set(possibleWords.join('').split(''))
+  return [...lettersFromPossibleWords].filter(c => !used.has(c));
+};
+
+const getMostEliminativeWord = (allWords, possibleWords, guessedWords) => {
+  const unusedLetters = getUnusedLetters(guessedWords, possibleWords)
+
+  return allWords
+    .map(word => {
+      const unique = new Set(word);
+      const overlap = [...unique].filter(c => unusedLetters.includes(c));
+      return { word, score: overlap.length };
+    })
+    .sort((a, b) => b.score - a.score)[0]
+};
+
+module.exports = { getNextEntropyGuess, getMostEliminativeWord }
