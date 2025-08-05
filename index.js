@@ -8,10 +8,10 @@ const crypto = require('crypto');
 const POSSIBLE_WORDS_TXT = "./valid-wordle-words.txt"
 const SHA_FILE = "./word-list-sha.txt"
 const words = fs.readFileSync(POSSIBLE_WORDS_TXT)
-let possibleWords = words.toString().split("\n")
+let possibleWords = words.toString().split("\n").map(word => word.trim())
 // Will be used if we need to reference all words again
 // for mass elimination mode at the end
-const allWords = words.toString().split("\n")
+const allWords = words.toString().split("\n").map(word => word.trim())
 
 const sha_read = fs.readFileSync(SHA_FILE)
 let stored_sha = sha_read.toString().split("\n")[0]
@@ -64,7 +64,7 @@ const getFileHash = (filePath, algorithm = 'sha256') => {
 
 const storeNewSha = (newFirstGuess) => {
   console.log("Storing new Hash and first guess...")
-  fs.writeFileSync(SHA_FILE, `${stored_sha}\n${newFirstGuess}`)
+  fs.writeFileSync(SHA_FILE, `${stored_sha}\n${newFirstGuess.word}`)
   console.log("Stored first Hash!")
 }
 

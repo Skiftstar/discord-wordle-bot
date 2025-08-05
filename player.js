@@ -1,17 +1,30 @@
 const { exec } = require('child_process');
+const os = require('os');
+const path = require('path');
 
-// basically just uses wtype to submit the guess
-// maybe use an sh script instead?
 const typeGuess = async (guess) => {
   return new Promise((resolve, reject) => {
-    exec(`wtype "${guess}" && wtype -P return`, (error, stdout, stderr) => {
-      if (error) {
-        reject(error);
-        return;
-      }
-      resolve(stdout);
-    });
+    // Windows with nircmd
+    if (os.platform() === 'win32') {
+      const nircmdPath = path.join(__dirname, 'nircmd.exe');
+      let command = ""
+      guess.split("").forEach((letter) => {
+        command += `${nircmdPath} sendkeypress ${letter} && `;
+      })
+      command += `${nircmdPath} sendkeypress enter`
+
+      exec(command, (error, stdout, stderr) => {
+        if (error) return reject(error);
+        resolve(stdout);
+      });
+    } else {
+      // Linux with use wtype
+      exec(`wtype "${guess}" && wtype -P return`, (error, stdout, stderr) => {
+        if (error) return reject(error);
+        resolve(stdout);
+      });
+    }
   });
-}
+};
 
 module.exports = { typeGuess }
