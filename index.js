@@ -115,6 +115,8 @@ const play = async () => {
     checkElimMode(feedbackPattern)
     currentRow++ 
     firstGuess = false
+
+    console.log("\n")
     play()
   }, 3000) // Delay because discord wordle has animation after submitting
 }
