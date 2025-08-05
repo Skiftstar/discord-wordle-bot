@@ -65,4 +65,6 @@ Just a really really basic version of wordle I created to test the bot lol
 We don't interact with Discord directly. The solver just takes screenshots, evaluates them and sends keystroke events via wtype.
 
 # Todos?
-Still needs some form of detection when a word is not valid, because I think my word list is longer than the one the NYTimes uses. Just waiting for a real-life case to check
+- Still needs some form of detection when a word is not valid, because I think my word list is longer than the one the NYTimes uses. Just waiting for a real-life case to check
+- Should probably move the input to an sh file
+- Windows compat
