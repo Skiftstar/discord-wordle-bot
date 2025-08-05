@@ -2,7 +2,6 @@ const { getPattern } = require("./wordle-calc.js")
 
 const getNextGuess = (possibleWords) => {
   let bestGuess = { entropy: -1, word: "" }
-  console.log("Possible Words:", possibleWords.length)
   for (const word of possibleWords) {
     const entropy = getWordEntropy(possibleWords, word)
     if (entropy > bestGuess.entropy) {
@@ -13,12 +12,14 @@ const getNextGuess = (possibleWords) => {
 }
 
 const getWordEntropy = (possibleWords, wordToCheck) => {
+  // Get all patterns against all possible words
   const patterns = {}
   for (const word of possibleWords) {
     const pattern = getPattern(wordToCheck, word)
     patterns[pattern] = (patterns[pattern] || 0) + 1
   }
 
+  // Calculate entropy based on patterns
   let entropy = 0
   for (const count of Object.values(patterns)) {
     const p = count / possibleWords.length

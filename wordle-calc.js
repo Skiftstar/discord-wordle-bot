@@ -1,3 +1,4 @@
+// Just checks 2 words against each other and what pattern they would produce
 const getPattern = (guess, possibleSolution) => {
   guess = guess.toLowerCase()
   possibleSolution = possibleSolution.toLowerCase()
@@ -18,6 +19,7 @@ const getPattern = (guess, possibleSolution) => {
   return pattern
 }
 
+// Just returns a subset of 'possibleWords' that produce 'pattern' when pitted against 'guess'
 const getWordsThatProducePattern = (possibleWords, pattern, guess) => {
   let possibleSolutions = []
   for (const word of possibleWords) {

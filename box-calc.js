@@ -84,8 +84,6 @@ const findLetterBoxes = async () => {
     return rowA === rowB ? a.x - b.x : rowA - rowB;
   });
 
-  console.log("Detected boxes:");
-  console.log(boxes);
   return boxes
 }
 
