@@ -106,9 +106,9 @@ const getPixelState = async (x,y) => {
   ctx.drawImage(img, 0, 0);
   const pixelData = ctx.getImageData(x, y, 1, 1).data;
 
-  if (colorCompare(pixelData, CORRECT_COLOR)) return "CORRECT"
-  if (colorCompare(pixelData, VALID_COLOR)) return "VALID"
-  return "WRONG"
+  if (colorCompare(pixelData, CORRECT_COLOR)) return "g"
+  if (colorCompare(pixelData, VALID_COLOR)) return "y"
+  return "b"
 } 
 
 module.exports = { findLetterBoxes, takeScreenshot, getPixelState }
