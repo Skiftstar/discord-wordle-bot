@@ -38,13 +38,23 @@ const getUnusedLetters = (guessedWords, possibleWords) => {
 const getMostEliminativeWord = (allWords, possibleWords, guessedWords) => {
   const unusedLetters = getUnusedLetters(guessedWords, possibleWords)
 
-  return allWords
+  const overlapWords = allWords
     .map(word => {
       const unique = new Set(word);
       const overlap = [...unique].filter(c => unusedLetters.includes(c));
       return { word, score: overlap.length };
     })
-    .sort((a, b) => b.score - a.score)[0]
+    .sort((a, b) => b.score - a.score)
+
+  const wordsWithHighestScore = overlapWords.filter(word => word.score === overlapWords[0].score) 
+
+  //check if any words are in the possibleSolutions, if so, pick one of them
+  for (const word of wordsWithHighestScore) {
+    if (possibleWords.includes(word.word)) {
+      return word
+    }
+  }
+  return wordsWithHighestScore[0]
 };
 
 module.exports = { getNextEntropyGuess, getMostEliminativeWord }
