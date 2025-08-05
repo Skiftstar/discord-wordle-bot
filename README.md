@@ -38,7 +38,7 @@ npm i
 
 # Usage
 Open Discord Wordle, make sure it's in **Dark Mode** and that it's **big enough**.
-If needed, adjust screenshot area in `box-calc.js` (**Only works on Linux! Windows just screenshots your entire fist desktop!**)
+If needed, adjust screenshot area in `box-calc.js` (**Only works on Linux! Windows just screenshots your entire first desktop!**)
 
 Run
 ```
