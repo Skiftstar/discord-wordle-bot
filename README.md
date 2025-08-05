@@ -8,6 +8,7 @@ https://github.com/user-attachments/assets/bc20f38d-b425-4ee9-a83a-1ec32531042c
 
 # Installation
 Only works on Linux
+
 Currently requires `grim` and `wtype`
 ```
 sudo pacman -S grim wtype
