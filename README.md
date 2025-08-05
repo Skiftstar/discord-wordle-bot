@@ -4,7 +4,9 @@ Idk bro, late night boredom
 # Show?
 Okie :3
 
-https://github.com/user-attachments/assets/bd61cff2-0649-40cf-9db8-b1eb2f1f8fa0
+https://github.com/user-attachments/assets/98b18ef6-7aac-4098-80c5-94433fb18b79
+
+https://github.com/user-attachments/assets/67b53153-a027-4f14-be22-fb1b722fb931
 
 # Installation
 ## Linux
@@ -37,7 +39,7 @@ npm i
 ```
 
 # Usage
-Open Discord Wordle, make sure it's in **Dark Mode** and that it's **big enough**.
+Open Discord Wordle, make sure it's in **Dark Mode** and that it's **big enough**. Make sure only the playfield is visible and none of previews of other users (just decrease window width for this), just like in the demo video above.
 If needed, adjust screenshot area in `box-calc.js` (**Only works on Linux! Windows just screenshots your entire first desktop!**)
 
 Run
