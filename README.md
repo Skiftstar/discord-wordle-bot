@@ -3,7 +3,8 @@ Idk bro, latenight boredom
 
 # Show?
 Okie :3
-<video src="demo.mp4" controls width="600"></video>
+
+https://github.com/user-attachments/assets/bc20f38d-b425-4ee9-a83a-1ec32531042c
 
 # Html file?
 Just a really really basic version of wordle I created to test the bot lol
