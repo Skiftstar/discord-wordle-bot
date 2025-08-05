@@ -99,6 +99,8 @@ const play = async () => {
   getGuess()
   await typeGuess(lastGuess)
   playedGuesses.push(lastGuess)
+
+  console.log("Waiting for animation...")
   setTimeout(async () => {
     const feedbackPattern = await getRowPattern()
     console.log("Detected Pattern", feedbackPattern)
@@ -158,11 +160,13 @@ const filterWords = (feedbackPattern) => {
 const getGuess = () => {
   let guess = ""
   if (elimMode) {
+    console.log("Calculating ElimMode Guess...")
     guess = getMostEliminativeWord(allWords, possibleWords, playedGuesses)
   } else {
     if (initalShaValid && firstGuess) {
       guess = { word: initialShaGuess }
     } else {
+      console.log("Calculating Entropy Guess...")
       guess = getNextEntropyGuess(possibleWords)
       if (firstGuess) storeNewSha(guess)
     }
