@@ -21,8 +21,13 @@ also uses `canvas` to analyze the screenshots
 npm i
 ```
 
+Make the screenshot script executeable
+```
+chmod +x screenshot.sh
+```
+
 # Usage
-Open Discord Wordle, make sure it's in *Dark Mode* and that it's *big enough*.
+Open Discord Wordle, make sure it's in **Dark Mode** and that it's **big enough**.
 If needed, adjust screenshot area in `box-calc.js`, by default it just screenshots the entire first monitor.
 
 Run
