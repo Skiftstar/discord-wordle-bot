@@ -4,7 +4,7 @@ Idk bro, late night boredom
 # Show?
 Okie :3
 
-https://github.com/user-attachments/assets/bc20f38d-b425-4ee9-a83a-1ec32531042c
+https://github.com/user-attachments/assets/56577129-dcfa-4fb6-a074-6184dc46ec7a
 
 # Installation
 Only works on Linux
