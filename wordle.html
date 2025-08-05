@@ -73,6 +73,7 @@
 
   const selectFinalWord = () => {
     finalWord = possibleWords[getRandomInt(possibleWords.length)]
+    finalWord = "watts"
     document.getElementById("final-word").innerHTML = finalWord
     initialized = true
   }
@@ -99,22 +100,46 @@
   }
 
   const checkLetters = () => {
-    typedLetters[currentRow].forEach((letter, index) => {
-      letter = letter.toLowerCase()
-      compareWord = finalWord.toLowerCase()
+    const pattern = getPattern()
+    pattern.forEach((state, index) => {
       const letterBox = document.getElementById(`letter-${currentRow + 1}-${index + 1}`)
-      if (letter === finalWord.charAt(index)) {
+      if (state === "g") {
         letterBox.className = "letter-box correct"
         return
       }
-
-      if (finalWord.includes(letter)) {
+      if (state === "y") {
         letterBox.className = "letter-box valid"
         return
       }
-
       letterBox.className = "letter-box wrong"
     })
+  }
+
+  const getPattern = () => {
+    guess = typedLetters[currentRow].join("").toLowerCase()
+    possibleSolution = finalWord.toLowerCase()
+    let pattern = ["b", "b", "b", "b", "b"]
+    for (let i = 0; i < possibleSolution.length; i++) {
+      if (guess[i] === possibleSolution[i]) {
+        pattern[i] = "g"
+        possibleSolution = setCharAt(possibleSolution, i, " ")
+      }
+    }
+
+    for (let i = 0; i < guess.length; i++) {
+      if (possibleSolution.includes(guess[i])) {
+        pattern[i] = "y"
+        const charIndex = possibleSolution.indexOf(guess[i])
+        possibleSolution = setCharAt(possibleSolution, charIndex, " ")
+      }
+    }
+
+    return pattern
+  }
+
+  const setCharAt = (str, index, chr) => {
+    if (index > str.length - 1) return str;
+    return str.substring(0, index) + chr + str.substring(index + 1);
   }
 
   const addLetter = (key) => {
