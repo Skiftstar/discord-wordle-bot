@@ -11,7 +11,8 @@ const getPattern = (guess, possibleSolution) => {
   for (let i = 0; i < possibleSolution.length; i++) {
     if (guess[i] === possibleSolution[i]) {
       pattern[i] = "g"
-      possibleSolution = setCharAt(possibleSolution, i, " ")
+      possibleSolution = setCharAt(possibleSolution, i, "-")
+      guess = setCharAt(guess, i, "_")
     }
   }
 
@@ -19,7 +20,7 @@ const getPattern = (guess, possibleSolution) => {
     if (possibleSolution.includes(guess[i])) {
       pattern[i] = "y"
       const charIndex = possibleSolution.indexOf(guess[i])
-      possibleSolution = setCharAt(possibleSolution, charIndex, " ")
+      possibleSolution = setCharAt(possibleSolution, charIndex, "-")
     }
   }
 

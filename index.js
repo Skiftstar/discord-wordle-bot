@@ -122,7 +122,7 @@ const checkElimMode = (lastPattern) => {
     elimMode = false
     return
   }
-  if (countLetter(lastPattern, "b") === 1 && possibleWords.length > 1) {
+  if (countLetter(lastPattern, "b") <= 2 && possibleWords.length > 1) {
     elimMode = true
     return
   }

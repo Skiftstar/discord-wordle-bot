@@ -73,8 +73,7 @@
 
   const selectFinalWord = () => {
     finalWord = possibleWords[getRandomInt(possibleWords.length)]
-    finalWord = "watts"
-    document.getElementById("final-word").innerHTML = finalWord
+    document.getElementById("final-word").innerHTML = `Solution: ${finalWord}`
     initialized = true
   }
 
@@ -122,7 +121,8 @@
     for (let i = 0; i < possibleSolution.length; i++) {
       if (guess[i] === possibleSolution[i]) {
         pattern[i] = "g"
-        possibleSolution = setCharAt(possibleSolution, i, " ")
+        possibleSolution = setCharAt(possibleSolution, i, "-")
+        guess = setCharAt(guess, i, "_")
       }
     }
 
@@ -130,7 +130,7 @@
       if (possibleSolution.includes(guess[i])) {
         pattern[i] = "y"
         const charIndex = possibleSolution.indexOf(guess[i])
-        possibleSolution = setCharAt(possibleSolution, charIndex, " ")
+        possibleSolution = setCharAt(possibleSolution, charIndex, "-")
       }
     }
 
@@ -227,6 +227,11 @@
     gap: 10px;
     justify-items: center;
     align-items: center;
+  }
+
+  .final-word {
+    font-size: x-large;
+    font-weight: bold;
   }
 
   .box-row {
