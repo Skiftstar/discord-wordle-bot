@@ -52,7 +52,7 @@ Let the bot do its thing :)
 
 
 # How?
-The solvers keeps track of a list of possible solutions, originating from `valid-wordle-words.txt`.
+The solvers keeps track of a list of possible solutions, originating from `data/valid-wordle-words.txt`.
 After every guess, it will analyze the pattern and eliminate words that don't fall into this pattern.
 
 The Solver has 2 mode:
@@ -66,6 +66,13 @@ After each move it will check via the saved coordinates what color values the bo
 
 Finish Conditions are a "ggggg" pattern or 6 played rows.
 
+# Invalid Guesses?
+The word list the bot has is probably larger than the List of Words the New York Times uses, so the bot has detection for invalid guesses.
+
+If a word is not accepted, the solver will delete the word, calculate a new guess and automatically remove the invalid word from the word-list in `data/valid-wrodle-words.txt`.
+
+Keep in mind that when this happens, the next time you start the solver it will revalidate the SHA and calculating the first guess will take a few seconds (see section below for more info)
+
 # Sha file?
 Yeah I store the sha of the word list so that I can skip the first guess calculation, since that one will always be the same if the word list doesn't change.
 Also keep in mind if you change the word list, that the first guess calculation will take a bit.
@@ -78,4 +85,4 @@ Just a really really basic version of wordle I created to test the bot lol
 We don't interact with Discord directly. The solver just takes screenshots, evaluates them and sends keystroke events via wtype.
 
 # Todos?
-- Still needs some form of detection when a word is not valid, because I think my word list is longer than the one the NYTimes uses. Just waiting for a real-life case to check
+Can't think of anything right now, if you have something just open up an issue
