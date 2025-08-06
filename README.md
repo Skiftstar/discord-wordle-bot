@@ -40,6 +40,7 @@ npm i
 
 # Usage
 Open Discord Wordle, make sure it's in **Dark Mode** and that it's **big enough**. Make sure only the playfield is visible and none of previews of other users (just decrease window width for this), just like in the demo video above.
+
 If needed, adjust screenshot area in `modules/box-calc.js` (**Only works on Linux! Windows just screenshots your entire first desktop!**)
 
 Run
