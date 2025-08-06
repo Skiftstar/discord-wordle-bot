@@ -13,7 +13,8 @@ const SCREENSHOT_HEIGHT = 1080
 
 const CORRECT_COLOR = [83, 141, 78, 255]
 const VALID_COLOR = [181, 159, 59, 255]
-const WRONG_COLOR = [53, 58, 60, 255]
+const WRONG_COLOR = [58, 58, 60, 255]
+const INVALID_COLOR = [18, 18, 19, 255]
 
 const takeScreenshot = async () => {
   const platformn = os.platform()
@@ -118,10 +119,11 @@ const getPixelState = async (x,y) => {
 
   ctx.drawImage(img, 0, 0);
   const pixelData = ctx.getImageData(x, y, 1, 1).data;
-
+  
   if (colorCompare(pixelData, CORRECT_COLOR)) return "g"
   if (colorCompare(pixelData, VALID_COLOR)) return "y"
-  return "b"
+  if (colorCompare(pixelData, WRONG_COLOR)) return "b"
+  return "i"
 } 
 
 module.exports = { findLetterBoxes, takeScreenshot, getPixelState }

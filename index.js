@@ -1,7 +1,7 @@
 const { findLetterBoxes, takeScreenshot, getPixelState } = require("./modules/box-calc.js")
 const { getNextEntropyGuess, getMostEliminativeWord } = require("./modules/funny-math.js")
 const { getWordsThatProducePattern } = require("./modules/wordle-calc.js")
-const { typeGuess } = require("./modules/player.js")
+const { typeGuess, deleteInvalidGuess } = require("./modules/player.js")
 const fs = require('fs')
 const crypto = require('crypto');
 
@@ -11,7 +11,7 @@ const words = fs.readFileSync(POSSIBLE_WORDS_TXT)
 let possibleWords = words.toString().split("\n").map(word => word.trim())
 // Will be used if we need to reference all words again
 // for mass elimination mode at the end
-const allWords = words.toString().split("\n").map(word => word.trim())
+let allWords = words.toString().split("\n").map(word => word.trim())
 
 const sha_read = fs.readFileSync(SHA_FILE)
 let stored_sha = sha_read.toString().split("\n")[0]
@@ -45,6 +45,7 @@ const main = async () => {
   }
   getBoxRows(boxes)
   setTimeout(() => {
+    console.log("Starting Solver...\n")
     play()
   }, initalShaValid ? 3000 : 0)
 }
@@ -99,6 +100,7 @@ const play = async () => {
   getGuess()
   await typeGuess(lastGuess)
   playedGuesses.push(lastGuess)
+  firstGuess = false
 
   console.log("Waiting for animation...")
   setTimeout(async () => {
@@ -111,14 +113,39 @@ const play = async () => {
       return
     }
 
+    // Invalid Guess played
+    if (feedbackPattern === "iiiii") {
+      handleInvalidGuess()
+      return
+    }
+
     filterWords(feedbackPattern)
     checkElimMode(feedbackPattern)
     currentRow++ 
-    firstGuess = false
 
     console.log("\n")
     play()
   }, 3000) // Delay because discord wordle has animation after submitting
+}
+
+const handleInvalidGuess = async () => {
+  console.log(`Invalid Guess played...`)
+  console.log(`Removing ${lastGuess} from word list!`)
+
+  possibleWords = possibleWords.filter(word => word !== lastGuess)
+  allWords = allWords.filter(word => word !== lastGuess)
+  playedGuesses.pop()
+
+  //Delete guess
+  console.log("Deleting guess...")
+  await deleteInvalidGuess()
+
+  //Rewrite words file
+  console.log("Rewriting words list...")
+  fs.writeFileSync(POSSIBLE_WORDS_TXT, allWords.join("\n"))
+
+  console.log("Done :D Playing new Guess!\n")
+  play()
 }
 
 const checkElimMode = (lastPattern) => {
