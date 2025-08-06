@@ -1,12 +1,12 @@
-const { findLetterBoxes, takeScreenshot, getPixelState } = require("./box-calc.js")
-const { getNextEntropyGuess, getMostEliminativeWord } = require("./funny-math.js")
-const { getWordsThatProducePattern } = require("./wordle-calc.js")
-const { typeGuess } = require("./player.js")
+const { findLetterBoxes, takeScreenshot, getPixelState } = require("./modules/box-calc.js")
+const { getNextEntropyGuess, getMostEliminativeWord } = require("./modules/funny-math.js")
+const { getWordsThatProducePattern } = require("./modules/wordle-calc.js")
+const { typeGuess } = require("./modules/player.js")
 const fs = require('fs')
 const crypto = require('crypto');
 
-const POSSIBLE_WORDS_TXT = "./valid-wordle-words.txt"
-const SHA_FILE = "./word-list-sha.txt"
+const POSSIBLE_WORDS_TXT = "./data/valid-wordle-words.txt"
+const SHA_FILE = "./data/word-list-sha.txt"
 const words = fs.readFileSync(POSSIBLE_WORDS_TXT)
 let possibleWords = words.toString().split("\n").map(word => word.trim())
 // Will be used if we need to reference all words again

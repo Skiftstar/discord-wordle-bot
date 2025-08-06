@@ -7,6 +7,7 @@ const typeGuess = async (guess) => {
     // Windows with nircmd
     if (os.platform() === 'win32') {
       const nircmdPath = path.join(__dirname, 'nircmd.exe');
+      console.log(nircmdPath)
       let command = ""
       guess.split("").forEach((letter) => {
         command += `${nircmdPath} sendkeypress ${letter} && `;

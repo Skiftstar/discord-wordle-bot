@@ -1,9 +1,11 @@
-const os = require('os');
-const screenshot = require('screenshot-desktop');
-const { createCanvas, loadImage } = require('canvas');
-const { execFile } = require('child_process');
+const os = require('os')
+const path = require('path')
+const screenshot = require('screenshot-desktop')
+const { createCanvas, loadImage } = require('canvas')
+const { execFile } = require('child_process')
 
-const IMAGE_PATH = './screenshot.png';
+const IMAGE_PATH = path.join(__dirname, './../data/screenshot.png')
+console.log(IMAGE_PATH)
 const SCREENSHOT_X = 0
 const SCREENSHOT_Y = 0
 const SCREENSHOT_WIDTH = 1920
@@ -14,20 +16,21 @@ const VALID_COLOR = [181, 159, 59, 255]
 const WRONG_COLOR = [53, 58, 60, 255]
 
 const takeScreenshot = async () => {
-  const platformn = os.platform();
+  const platformn = os.platform()
   if (platformn === 'win32') {
     try {
-      await screenshot({ filename: IMAGE_PATH });
-      return IMAGE_PATH;
+      await screenshot({ filename: IMAGE_PATH })
+      return IMAGE_PATH
     } catch (err) {
-      throw new Error(`screenshot-desktop failed: ${err.message}`);
+      throw new Error(`screenshot-desktop failed: ${err.message}`)
     }
   }
   else {
+    const shPath = path.join(__dirname, "screenshot.sh") 
     return new Promise((resolve, reject) => {
-      execFile('./screenshot.sh', [SCREENSHOT_X, SCREENSHOT_Y, SCREENSHOT_WIDTH, SCREENSHOT_HEIGHT, IMAGE_PATH], (err, stdout, stderr) => {
-        if (err) return reject(err);
-        resolve(IMAGE_PATH);
+      execFile(shPath, [SCREENSHOT_X, SCREENSHOT_Y, SCREENSHOT_WIDTH, SCREENSHOT_HEIGHT, IMAGE_PATH], (err, stdout, stderr) => {
+        if (err) return reject(err)
+        resolve(IMAGE_PATH)
       });
     });
   }

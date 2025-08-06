@@ -22,14 +22,14 @@ npm i
 
 Make the screenshot script executeable
 ```
-chmod +x screenshot.sh
+chmod +x modules/screenshot.sh
 ```
 
 ## Windows
 
 Download [NirCmd](https://www.nirsoft.net/utils/nircmd.html) (Scroll to bottom of site and click "Downlaod NirCmd")
 
-Unzip archive and put NirCmd.exe inside the project folder. NirCmd is used to input keystrokes.
+Unzip archive and put NirCmd.exe inside the `modules` folder. NirCmd is used to input keystrokes.
 
 Install npm packages `canvas` for screenshot analyzing and `screenshot-desktop` for screenshot taking
 ```
@@ -38,7 +38,7 @@ npm i
 
 # Usage
 Open Discord Wordle, make sure it's in **Dark Mode** and that it's **big enough**.
-If needed, adjust screenshot area in `box-calc.js` (**Only works on Linux! Windows just screenshots your entire first desktop!**)
+If needed, adjust screenshot area in `modules/box-calc.js` (**Only works on Linux! Windows just screenshots your entire first desktop!**)
 
 Run
 ```

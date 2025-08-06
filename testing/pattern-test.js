@@ -1,7 +1,7 @@
-const { getPattern, getWordsThatProducePattern } = require("./wordle-calc.js")
+const { getPattern, getWordsThatProducePattern } = require("./../modules/wordle-calc.js")
 const fs = require("fs")
 
-const POSSIBLE_WORDS_TXT = "./valid-wordle-words.txt"
+const POSSIBLE_WORDS_TXT = "./../data/valid-wordle-words.txt"
 const words = fs.readFileSync(POSSIBLE_WORDS_TXT)
 let possibleWords = words.toString().split("\n")
 
