@@ -1,3 +1,4 @@
+const { getConfigValue } = require("./config.js")
 const { exec } = require('child_process');
 const os = require('os');
 const path = require('path');
@@ -11,6 +12,7 @@ const typeGuess = async (guess) => {
       guess.split("").forEach((letter) => {
         command += `${nircmdPath} sendkeypress ${letter} && `;
       })
+      command += `${nircmdPath} wait ${getConfigValue("SUBMIT_WORD_DELAY")} && `
       command += `${nircmdPath} sendkeypress enter`
 
       exec(command, (error, stdout, stderr) => {
@@ -19,7 +21,7 @@ const typeGuess = async (guess) => {
       });
     } else {
       // Linux with use wtype
-      exec(`wtype "${guess}" && wtype -P return`, (error, stdout, stderr) => {
+      exec(`wtype "${guess}" && wtype -s ${getConfigValue("SUBMIT_WORD_DELAY")} -P return`, (error, stdout, stderr) => {
         if (error) return reject(error);
         resolve(stdout);
       });

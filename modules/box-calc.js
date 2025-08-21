@@ -3,18 +3,18 @@ const path = require('path')
 const screenshot = require('screenshot-desktop')
 const { createCanvas, loadImage } = require('canvas')
 const { execFile } = require('child_process')
+const { getConfigValue } = require("./config.js")
 
 const IMAGE_PATH = path.join(__dirname, './../data/screenshot.png')
-console.log(IMAGE_PATH)
-const SCREENSHOT_X = 0
-const SCREENSHOT_Y = 0
-const SCREENSHOT_WIDTH = 1920
-const SCREENSHOT_HEIGHT = 1080
+const SCREENSHOT_X = getConfigValue("SCREENSHOT_X")
+const SCREENSHOT_Y = getConfigValue("SCREENSHOT_Y")
+const SCREENSHOT_WIDTH = getConfigValue("SCREENSHOT_WIDTH")
+const SCREENSHOT_HEIGHT = getConfigValue("SCREENSHOT_HEIGHT")
 
-const CORRECT_COLOR = [83, 141, 78, 255]
-const VALID_COLOR = [181, 159, 59, 255]
-const WRONG_COLOR = [58, 58, 60, 255]
-const INVALID_COLOR = [18, 18, 19, 255]
+const CORRECT_COLOR = getConfigValue("CORRECT_COLOR")
+const VALID_COLOR = getConfigValue("VALID_COLOR")
+const WRONG_COLOR = getConfigValue("WRONG_COLOR")
+const INVALID_COLOR = getConfigValue("INVALID_COLOR")
 
 const takeScreenshot = async () => {
   const platformn = os.platform()

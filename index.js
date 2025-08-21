@@ -2,6 +2,7 @@ const { findLetterBoxes, takeScreenshot, getPixelState } = require("./modules/bo
 const { getNextEntropyGuess, getMostEliminativeWord } = require("./modules/funny-math.js")
 const { getWordsThatProducePattern } = require("./modules/wordle-calc.js")
 const { typeGuess, deleteInvalidGuess } = require("./modules/player.js")
+const { getConfigValue } = require("./modules/config.js")
 const fs = require('fs')
 const crypto = require('crypto');
 
@@ -123,9 +124,9 @@ const play = async () => {
     checkElimMode(feedbackPattern)
     currentRow++ 
 
-    console.log("\n")
+    console.log("") //empty line
     play()
-  }, 3000) // Delay because discord wordle has animation after submitting
+  }, getConfigValue("ANIMATION_DELAY")) // Delay because discord wordle has animation after submitting
 }
 
 const handleInvalidGuess = async () => {
@@ -153,11 +154,11 @@ const checkElimMode = (lastPattern) => {
     elimMode = false
     return
   }
-  if (countLetter(lastPattern, "b") <= 2 && possibleWords.length > 1) {
+  if (countLetter(lastPattern, "b") <= getConfigValue("ELIM_MODE_UNKNOWN_TRHESHOLD") && possibleWords.length > 1) {
     elimMode = true
     return
   }
-  if (possibleWords.length < 10) {
+  if (possibleWords.length < getConfigValue("EMIN_MODE_REMAINING_WORDS_TRESHOLD")) {
     elimMode = true
     return
   }
