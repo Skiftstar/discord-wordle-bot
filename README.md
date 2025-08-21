@@ -41,7 +41,7 @@ npm i
 # Usage
 Open Discord Wordle, make sure it's in **Dark Mode** and that it's **big enough**. Make sure only the playfield is visible and none of previews of other users (just decrease window width for this), just like in the demo video above.
 
-If needed, adjust screenshot area in `modules/box-calc.js` (**Only works on Linux! Windows just screenshots your entire first desktop!**)
+If needed, adjust config values in `config.json` (**Screenshot area only works on Linux! Windows just screenshots your entire first desktop!**)
 
 Run
 ```
@@ -57,7 +57,7 @@ After every guess, it will analyze the pattern and eliminate words that don't fa
 
 The Solver has 2 mode:
 - Entropy Mode, where it checks for the word with the highest entropy and uses this as its guess
-- Elimination mode, if only two letters or less than 10 possible solutions remain, the solver will ignore the pattern and eliminate as many remaining letters as possible.
+- Elimination mode, if only two letters or less than 10 possible solutions remain (adjustable in `config.json`), the solver will ignore the pattern and eliminate as many remaining letters as possible.
 it will do so until only 1 word remains or it reaches its final guess.
 
 To play and analyze the game, it takes screenshots at the beginning of the game and after each move.
