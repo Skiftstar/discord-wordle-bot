@@ -154,6 +154,7 @@ const checkElimMode = (lastPattern) => {
     elimMode = false
     return
   }
+  if (elimMode) return
   if (countLetter(lastPattern, "b") <= getConfigValue("ELIM_MODE_UNKNOWN_TRHESHOLD") && possibleWords.length > 1) {
     elimMode = true
     return
