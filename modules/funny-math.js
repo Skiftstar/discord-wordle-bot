@@ -1,4 +1,5 @@
 const { getPattern } = require("./wordle-calc.js")
+const { getLeftOverWords, getAllWords } = require("./word-handler.js")
 
 const getNextEntropyGuess = (possibleWords) => {
   let bestGuess = { entropy: -1, word: "" }
@@ -35,7 +36,10 @@ const getUnusedLetters = (guessedWords, possibleWords) => {
   return [...lettersFromPossibleWords].filter(c => !used.has(c));
 };
 
-const getMostEliminativeWord = (allWords, possibleWords, guessedWords) => {
+const getMostEliminativeWord = (guessedWords) => {
+  const possibleWords = getLeftOverWords()
+  const allWords = getAllWords()
+
   const unusedLetters = getUnusedLetters(guessedWords, possibleWords)
 
   const overlapWords = allWords
@@ -48,13 +52,24 @@ const getMostEliminativeWord = (allWords, possibleWords, guessedWords) => {
 
   const wordsWithHighestScore = overlapWords.filter(word => word.score === overlapWords[0].score) 
 
-  //check if any words are in the possibleSolutions, if so, pick one of them
+  // Out of all words with highest ElimScore, use the one with the highest entropy
+  let bestWord = { entropy: -1, word: "", score: wordsWithHighestScore[0].score}
   for (const word of wordsWithHighestScore) {
-    if (possibleWords.includes(word.word)) {
-      return word
+    const entropy = getWordEntropy(possibleWords, word.word)
+    if (entropy > bestWord.entropy) {
+      bestWord = {entropy, word: word.word, score: word.score}
     }
   }
-  return wordsWithHighestScore[0]
+  return bestWord
+  
+
+  //check if any words are in the possibleSolutions, if so, pick one of them
+  // for (const word of wordsWithHighestScore) {
+  //   if (possibleWords.includes(word.word)) {
+  //     return word
+  //   }
+  // }
+  // return wordsWithHighestScore[0]
 };
 
 module.exports = { getNextEntropyGuess, getMostEliminativeWord }

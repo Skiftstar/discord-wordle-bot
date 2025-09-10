@@ -1,10 +1,14 @@
 {
+  "_comment": "relative to index.js",
+  "WORDLIST_FILE": "./data/valid-wordle-words.txt",
+  "SHA_FILE": "./data/word-list-sha.txt",
+
   "CORRECT_COLOR": [83, 141, 78, 255],
   "VALID_COLOR": [181, 159, 59, 255],
   "WRONG_COLOR": [58, 58, 60, 255],
   "INVALID_COLOR": [18, 18, 19, 255],
 
-  "_comment": "Screenshot config only applies to Linux",
+  "__comment": "Screenshot config only applies to Linux",
   "SCREENSHOT_X": 0,
   "SCREENSHOT_Y": 0,
   "SCREENSHOT_WIDTH": 1920,

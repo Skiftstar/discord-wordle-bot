@@ -16,6 +16,8 @@ const VALID_COLOR = getConfigValue("VALID_COLOR")
 const WRONG_COLOR = getConfigValue("WRONG_COLOR")
 const INVALID_COLOR = getConfigValue("INVALID_COLOR")
 
+const boxRows = []
+
 const takeScreenshot = async () => {
   const platformn = os.platform()
   if (platformn === 'win32') {
@@ -126,4 +128,47 @@ const getPixelState = async (x,y) => {
   return "i"
 } 
 
-module.exports = { findLetterBoxes, takeScreenshot, getPixelState }
+
+// has a 10px margin to count smth as one row incase the box detection isn't accurate
+// also automatically yeets every row that doesn't have 5 boxes
+const groupBoxesToRows = (boxes) => {
+  console.log("Detecting Letterboxes...")
+  do {
+    const boxY = boxes[0].y
+    const boxesInRow = boxes.filter(box => box.y > boxY - 10 && box.y < boxY + 10)
+    if (boxesInRow.length === 5) boxRows.push(boxesInRow)
+    boxes = boxes.filter(box => !(box.y > boxY - 10 && box.y < boxY + 10));
+  } while (boxes.length > 0)
+  console.log("Detected", boxRows.length, "rows!")
+}
+
+// small margin towards the middle of the box to make sure we hit it 100% of the time
+const getBoxPixel = (rowIndex, letterIndex) => {
+  const box = boxRows[rowIndex][letterIndex]
+  return {x: box.x + 1, y: box.y + 1}
+}
+
+// Gets pattern of the row that was last submitted
+// in the format of "xxxxx" where x can be g y or b
+// for a green, yellow, black square
+const getRowPattern = async (rowIndex) => {
+  await takeScreenshot()
+  let pattern = ""
+  for (let i = 0; i < 5; i++ ) {
+    const {x,y} = getBoxPixel(rowIndex, i)
+    const state = await getPixelState(x,y)
+    pattern += state
+  }
+  return pattern
+}
+
+const detectWordRows = async () => {
+  let boxes = await findLetterBoxes()
+  if (boxes.length === 0) {
+    console.log("No boxes found :o")
+    return
+  }
+  groupBoxesToRows(boxes)
+}
+
+module.exports = { detectWordRows, getRowPattern }
