@@ -31,7 +31,7 @@ const play = async () => {
   }
   if (currentRow === 5) elimMode = false // turn off elim mode on last guess
 
-  getGuess()
+  await getGuess()
   await typeGuess(lastGuess)
   playedGuesses.push(lastGuess)
   firstGuess = false
@@ -99,14 +99,14 @@ const checkElimMode = (lastPattern) => {
 
 const countLetter = (word, letter) => word.split(letter).length - 1;
 
-const getGuess = () => {
+const getGuess = async () => {
   let guess = ""
   const possibleWords = getLeftOverWords()
   if (elimMode) {
     console.log("Calculating ElimMode Guess...")
     guess = getMostEliminativeWord(playedGuesses)
   } else {
-    if (firstGuess && confirmSHAValidity()) {
+    if (firstGuess && await confirmSHAValidity()) {
       guess = { word: getFirstGuessFromSHA() }
     } else {
       console.log("Calculating Entropy Guess...")
